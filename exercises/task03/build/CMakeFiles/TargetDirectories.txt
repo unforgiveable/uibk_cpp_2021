@@ -1,0 +1,14 @@
+M:/Git/uibk_cpp_2021/exercises/task03/build/CMakeFiles/rebuild_cache.dir
+M:/Git/uibk_cpp_2021/exercises/task03/build/CMakeFiles/Task03.dir
+M:/Git/uibk_cpp_2021/exercises/task03/build/CMakeFiles/edit_cache.dir
+M:/Git/uibk_cpp_2021/exercises/task03/build/app/CMakeFiles/edit_cache.dir
+M:/Git/uibk_cpp_2021/exercises/task03/build/app/CMakeFiles/rebuild_cache.dir
+M:/Git/uibk_cpp_2021/exercises/task03/build/libBar/CMakeFiles/libBar.dir
+M:/Git/uibk_cpp_2021/exercises/task03/build/libBar/CMakeFiles/edit_cache.dir
+M:/Git/uibk_cpp_2021/exercises/task03/build/libBar/CMakeFiles/rebuild_cache.dir
+M:/Git/uibk_cpp_2021/exercises/task03/build/libBaz/CMakeFiles/libBaz.dir
+M:/Git/uibk_cpp_2021/exercises/task03/build/libBaz/CMakeFiles/edit_cache.dir
+M:/Git/uibk_cpp_2021/exercises/task03/build/libBaz/CMakeFiles/rebuild_cache.dir
+M:/Git/uibk_cpp_2021/exercises/task03/build/libFoo/CMakeFiles/libFoo.dir
+M:/Git/uibk_cpp_2021/exercises/task03/build/libFoo/CMakeFiles/edit_cache.dir
+M:/Git/uibk_cpp_2021/exercises/task03/build/libFoo/CMakeFiles/rebuild_cache.dir

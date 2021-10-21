@@ -1,0 +1,2 @@
+C:\msys64\mingw64\bin\ar.exe qc liblibBar.a CMakeFiles/libBar.dir/bar.cpp.obj
+C:\msys64\mingw64\bin\ranlib.exe liblibBar.a
