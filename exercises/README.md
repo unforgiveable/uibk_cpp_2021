@@ -146,3 +146,181 @@ Now, do that in C++!
 
 Utilize lambdas, `std::function`, and/or structs with call operators.
 Critically think about ownership and minimize the amount of heap allocations.
+
+## Task 11
+
+Take a look at [Boost's chat server example](https://www.boost.org/doc/libs/1_74_0/doc/html/boost_asio/examples/cpp11_examples.html#boost_asio.examples.cpp11_examples.chat).
+Try to understand how the session's lifetime is managed by the server.
+Focus on `std::enable_shared_from_this` in combination with lambda captures.
+
+## Task 12
+
+Reuse `Person` from Task 08 and take the following, incomplete definition of a room:
+
+```cpp
+class Room {
+  public:
+    Room(int id, size_t limit) : id(id), limit(limit) {}
+
+    // Returns true iff the person successfully entered.
+    bool enter(/* Person */) {}
+
+    void exit(/* Person */) {}
+
+  private:
+    const int id;
+    const size_t limit;
+    std::vector</* Person */> peopleInside;
+};
+```
+
+`Room` contains a list of people currently located inside.
+People can enter and exit the room via the respective member functions.
+However, at most only `limit` people may be inside at any given time (invariant).
+
+- Add the missing pieces, paying special attention to the types
+
+The following use cases need to be covered next:
+- Asking a `Room` how many people are currently located inside
+- Asking a `Room` whether a specific person is currently located inside
+- Iterating over all people currently located in a `Room`
+
+Implement whatever is necessary to support these use cases, making sure the invariant remains intact.
+
+## Task 13
+
+Reuse `Person` from Task 08.
+
+Create an `std::vector<std::shared_ptr<Person>>` with at least 3 different elements.
+Create a function which takes a `const std::vector<std::shared_ptr<Person>>&` as input and returns an `std::vector<Person*>`.
+Each element in the result vector corresponds to the respective element in the input vector.
+
+For the functional programming nerds, the definition of this function would be something like `fmap std::shared_ptr::get`.
+
+Write your function in different ways and compare the readability:
+- use a range-based for loop
+- use `std::transform`
+  - use a lambda expression
+  - use `std::mem_fn`
+
+Think about taking the argument by value instead of taking it by const reference.
+
+## Task 14
+
+Implement your own version of `std::vector` without using any of the provided containers — use *regular arrays* (`new[]` / `delete[]`) to house your elements.
+The focus of this task lies on the use of templates and implementation of iterators.
+You do not have to concern yourself with custom allocators.
+
+Test your implementation with different types (`int`, `double`, and a custom struct).
+
+Take your vector from task 1 and implement iterators.
+You might want to read through the respective documentation.
+
+Write some tests utilising algorithms provided by the standard library to check if your iterators behave correctly.
+
+## Task 15
+
+Take your vector implementation from Task 14 and instantiate it with a big number of unique types.
+
+Inspect the relationship between the number of unique instantiates and compile time.
+Furthermore, look at the compiled object file using `nm`.
+
+## Task 16
+
+In this task you have to create a rudimentary plugin system.
+
+You are given `plugin.hpp` which contains an interface for your plugins, as well as the function name of the constructor function and its type.
+Note that the constructor function returns an `std::unique_ptr<Plugin>`.
+
+- create an executable which *dynamically* loads plugins and executes their `run` member function
+- create two different plugins (`foo` and `bar`) showing off the plugin system
+
+It could look like this:
+
+    $ ./main ./libFoo.so
+    Creation of first plugin
+    Running the first plugin
+    Destruction of first plugin
+
+    $ ./main ./libFoo.so ./libBar.so
+    Creation of first plugin
+    Running the first plugin
+    Destruction of first plugin
+    Creation of second plugin
+    Running the second plugin
+    Destruction of second plugin
+
+**Hint:** Have a look at the related man-pages *dlopen(3)* and *dlsym(3)*.
+
+## Task 17
+
+Take your vector from Task 14 and implement component-wise addition via `operator+` on your vector.
+Support implicit type conversions: `MyVector<int>{} + MyVector<double>{}` yields a `MyVector<double>`.
+
+**Hint:** Look into `decltype` and `std::declval`.
+
+## Task 18
+
+You are given the following code snippet of a mathematical vector.
+
+```cpp
+template <std::size_t N>
+class Vector {
+  public:
+    /* ... */
+
+  private:
+    std::array<double, N> data;
+};
+```
+
+Find an elegant way to provide the following interface:
+
+- On default construction (no arguments), all elements are initialized to zero.
+- Besides copy / move semantics, there is only one additional constructor which takes *exactly* `N` `double`s to initialize `data`.
+- Accessing elements via the subscript operator `operator[]`.
+- Members `.x`, `.y`, `.z` access `data[0]`, `data[1]`, `data[2]` respectively:
+    - With `N == 1` there should be only `.x` available.
+    - With `N == 2` there should be `.x` and `.y` available.
+    - With `N == 3` there should be `.x`, `.y`, and `.z` available.
+
+Add a few tests to ensure correct behavior using the following aliases:
+
+```cpp
+using Vec1 = Vector<1>;
+using Vec2 = Vector<2>;
+using Vec3 = Vector<3>;
+```
+
+**Note:** You are allowed to modify the given snippet as necessary.
+
+## Task 19
+
+Revisit the meta programming example from the lecture regarding `std::tuple`.
+
+Given the following class template:
+
+```cpp
+template <typename... Types>
+class type_set {};
+```
+
+`type_set` should behave like a set of types.
+The empty set would therefore be `type_set<>`, while the set containing the type `int` would be `type_set<int>`, so on and so forth.
+
+- Create a meta function `type_set_contains_v` which checks if a given `type_set` contains a given type.
+- Create a meta function `type_set_is_subset_v` which checks if a given `type_set` is a subset of another given `type_set`.
+- Create a meta function `type_set_is_same_v` which checks if a given `type_set` is equal to another given `type_set`.
+- Create a meta function `type_set_size_v` which tells the size of a given `type_set`.
+  For `type_set<int, int, float>` it should return 2.
+
+Try not to use any of the utilities provided by the standard library (like the example provided in the lecture).
+
+**Hint:** If you are struggling with this exercise you might want to have a look at how *fold* (i.e. *reduce*) is used in functional programming languages.
+
+## Task 20
+
+Revisit the *Advanced Template* slides.
+
+Go through the `has_print_to` example from the slides step by step.
+Explain all parts like it's done in the lecture.
